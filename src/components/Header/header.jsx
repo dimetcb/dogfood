@@ -1,10 +1,11 @@
-import "./index.css";
+import s from "./index.module.css";
+import cn from "classnames";
 
-function Header({ children }) {
+function Header({ children, user, onUpdateUser }) {
   return (
-    <header className="header">
+    <header className={cn(s.header, "cover")}>
       <div className="container">
-        <div className="header__wrapper">{children}</div>
+        <div className={s.wrapper}>{children}</div>
       </div>
     </header>
   );

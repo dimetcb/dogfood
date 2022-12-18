@@ -100,6 +100,17 @@
   display: flex;
 }
 
+.card__favorite svg {
+  fill: #ffffff;
+  stroke-width: 1px;
+  stroke: #7b8e98;
+}
+
+.card__favorite_is-active svg {
+  fill: #f44336;
+  stroke-width: 0;
+}
+
 .card__cart {
   margin-top: auto;
 }

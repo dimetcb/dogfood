@@ -1,9 +1,7 @@
 import "./index.css";
 
 const Sort = () => {
-	return (
-		null
-	);
+  return null;
 };
 
 export default Sort;

@@ -1,10 +1,11 @@
+import React from "react";
 import "./index.css";
 import logoSrc from "./logo.svg";
 
-function Logo(className, href, ...props) {
+function Logo({ className, href, ...props }) {
   return (
     <a
-      href={href ? href : "||"}
+      href={href ? href : "#"}
       className={className ? className : "logo"}
       {...props}
     >
@@ -13,4 +14,4 @@ function Logo(className, href, ...props) {
   );
 }
 
-export default Logo;
+export default React.memo(Logo);

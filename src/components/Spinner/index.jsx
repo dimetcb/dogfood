@@ -1,8 +1,8 @@
 import React from "react";
-import "./index.css";
+import s from "./index.module.css";
 
 const Spinner = () => {
-  return null;
+  return <div className={s.spinner} />;
 };
 
 export default Spinner;

@@ -1,83 +1,58 @@
-import React from "react";
-import s from "./index.css";
-import truck from "./img/truck.svg";
-import quality from "./img/quality.svg";
-import { useState } from "react";
-import { calcDiscountPrice, isLiked } from "../../utils/product";
+import s from "./index.module.css";
 import cn from "classnames";
 import { ReactComponent as Save } from "./img/save.svg";
+import truck from "./img/truck.svg";
+import quality from "./img/quality.svg";
+import { calcDiscountPrice, isLiked, createMarkup } from "../../utils/product";
+import { useNavigate } from "react-router-dom";
 
-const Product = ({
-  currentUser,
-  _id,
+export const Product = ({
   onProductLike,
-  available,
-  description,
-  discount,
-  isPublished,
-  likes,
-  name,
   pictures,
-  price,
+  likes = [],
   reviews,
-  stock,
   tags,
+  name,
+  price,
+  discount,
+  description,
   wight,
+  _id,
+  currentUser,
 }) => {
-  const [count, setCount] = useState(0);
-
-  const discountPrice = calcDiscountPrice(price, discount);
-  const isLike = isLiked(likes, currentUser._id);
-  function handleLikeClick() {
-    onProductLike({ _id, likes });
-  }
-
-  function createMarkupDescription() {
-    return { __html: description };
-  }
-
+  const navigate = useNavigate();
+  const discount_price = calcDiscountPrice(price, discount);
+  const isLike = isLiked(likes, currentUser?._id);
+  const desctiptionHTML = createMarkup(description);
   return (
     <>
       <div>
-        <a className="button-back" href="#">
+        <a href="#" className="button-back" onClick={() => navigate(-1)}>
           Назад
         </a>
         <h1 className={s.productTitle}>{name}</h1>
         <div>
-          <span>
-            Артикул: <b>2388907</b>
-          </span>
+          <span>Артикул:</span> <b>2388907</b>
         </div>
       </div>
       <div className={s.product}>
         <div className={s.imgWrapper}>
-          <img src={pictures} alt="product" />
+          <img src={pictures} alt={`Изображение ${name}`} />
         </div>
         <div className={s.desc}>
-          <span className={discount !== 0 ? s.oldPrice : s.price}>
+          <span className={discount ? s.oldPrice : s.price}>
             {price}&nbsp;₽
           </span>
-          {discount !== 0 && (
+          {discount && (
             <span className={cn(s.price, "card__price_type_discount")}>
-              {discountPrice}&nbsp;₽
+              {discount_price}&nbsp;₽
             </span>
           )}
           <div className={s.btnWrap}>
             <div className={s.left}>
-              <button
-                className={s.minus}
-                onClick={() => {
-                  if (count !== 0) {
-                    setCount(count - 1);
-                  }
-                }}
-              >
-                -
-              </button>
-              <span className={s.num}>{count}</span>
-              <button className={s.plus} onClick={() => setCount(count + 1)}>
-                +
-              </button>
+              <button className={s.minus}>-</button>
+              <span className={s.num}>0</span>
+              <button className={s.plus}>+</button>
             </div>
             <a href="/#" className={cn("btn", "btn_type_primary", s.cart)}>
               В корзину
@@ -85,7 +60,7 @@ const Product = ({
           </div>
           <button
             className={cn(s.favorite, { [s.favoriteActive]: isLike })}
-            onClick={handleLikeClick}
+            onClick={onProductLike}
           >
             <Save />
             <span>{isLike ? "В избранном" : "В избранное"}</span>
@@ -95,33 +70,25 @@ const Product = ({
             <div className={s.right}>
               <h3 className={s.name}>Доставка по всему Миру!</h3>
               <p className={s.text}>
-                Доставка курьером — <span className={s.bold}> от 399 ₽</span>
-              </p>
-              <p className={s.text}>
-                Доставка в пункт выдачи —{" "}
-                <span className={s.bold}> от 199 ₽</span>
+                Доставка курьером — <span className={s.bold}>от 399 ₽</span>
               </p>
             </div>
           </div>
           <div className={s.delivery}>
             <img src={quality} alt="quality" />
             <div className={s.right}>
-              <h3 className={s.name}>Гарантия качества</h3>
+              <h3 className={s.name}>Доставка по всему Миру!</h3>
               <p className={s.text}>
-                Если Вам не понравилось качество нашей продукции, мы вернем
-                деньги, либо сделаем все возможное, чтобы удовлетворить ваши
-                нужды.
+                Доставка курьером — <span className={s.bold}>от 399 ₽</span>
               </p>
             </div>
           </div>
         </div>
       </div>
+
       <div className={s.box}>
         <h2 className={s.title}>Описание</h2>
-        <p
-          className={s.subtitle}
-          dangerouslySetInnerHTML={createMarkupDescription()}
-        ></p>
+        <p className={s.subtitle} dangerouslySetInnerHTML={desctiptionHTML}></p>
         <h2 className={s.title}>Характеристики</h2>
         <div className={s.grid}>
           <div className={s.naming}>Вес</div>
@@ -150,5 +117,3 @@ const Product = ({
     </>
   );
 };
-
-export default Product;

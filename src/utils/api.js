@@ -20,8 +20,29 @@ class Api {
     }).then(onResponce);
   }
 
+  getProductById(idProduct) {
+    return fetch(`${this._baseUrl}/products/${idProduct}`, {
+      headers: this._headers,
+    }).then(onResponce);
+  }
+
+  setUserInfo(dataUser) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify(dataUser),
+    }).then(onResponce);
+  }
+
   search(searchQuery) {
     return fetch(`${this._baseUrl}/products/search?query=${searchQuery}`, {
+      headers: this._headers,
+    }).then(onResponce);
+  }
+
+  changeLikeProduct(productId, isLike) {
+    return fetch(`${this._baseUrl}/products/likes/${productId}`, {
+      method: isLike ? "DELETE" : "PUT",
       headers: this._headers,
     }).then(onResponce);
   }
