@@ -1,11 +1,8 @@
 import React from "react";
 import "./index.css";
 
-
 const Spinner = () => {
-	return (
-		null
-	);
+  return null;
 };
 
 export default Spinner;
